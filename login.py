@@ -1,6 +1,16 @@
 import PySimpleGUI as sg
 import mysql.connector
 
+def cadastrado (dados):
+
+    cursor.execute("SELECT * FROM cadastro WHERE username = %s AND password = %s", dados)
+    
+    if cursor.fetchone():
+        return True
+
+    else:
+        return False
+
 db = mysql.connector.connect(
     host = "localhost",
     user = "root",
@@ -27,20 +37,21 @@ window.close()
 
 if event == 'Login':
     
-    sql = ("SELECT * FROM cadastro WHERE username = %s AND password = %s")
-    cursor.execute(sql, dados)
-    
-    if cursor.fetchone():
-
+    if cadastrado(dados): 
         sg.popup('Login realizado com sucesso.', title='Sucesso')
 
-    else:
-
+    else: 
         sg.popup('Credenciais Invalidas.', title='Erro')
 
 elif event == 'Register':
-    
-    sql = "INSERT INTO cadastro (username, password) VALUES (%s, %s)"
-    cursor.execute(sql, dados)
-    db.commit()
-    sg.popup(f'{dados[0]}, sua conta foi registrada com sucesso.', title='Sucesso')
+
+    if not cadastrado(dados): 
+        
+        sql = "INSERT INTO cadastro (username, password) VALUES (%s, %s)"
+        cursor.execute(sql, dados)
+        db.commit()
+        sg.popup(f'{dados[0]}, sua conta foi registrada com sucesso.', title='Sucesso')
+
+    else:
+        sg.popup(f'O usuário {dados[0]} já está cadastrado em nosso sistema.', title='Erro')
+

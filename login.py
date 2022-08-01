@@ -1,16 +1,18 @@
 import PySimpleGUI as sg
 import mysql.connector
 
+#Conferir a presença no bd
 def cadastrado (dados):
 
     cursor.execute("SELECT * FROM cadastro WHERE username = %s AND password = %s", dados)
     
     if cursor.fetchone():
         return True
-
+    
     else:
         return False
 
+#Inicializando a conexão com o MySQL
 db = mysql.connector.connect(
     host = "localhost",
     user = "root",
@@ -19,8 +21,8 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
+#Construção da janela GUI
 sg.theme('Dark Grey 13')
-
 layout = [
     [sg.Text('Usuário:')],
     [sg.Input(key='username')],
@@ -30,11 +32,13 @@ layout = [
     [sg.Text('', key='mensagem')],
 ]
 
+#Leitura dos inputs
 window = sg.Window('Realize seu login', layout)
 event, values = window.read()
 dados = (values['username'], values['password'])
 window.close()
 
+#Login
 if event == 'Login':
     
     if cadastrado(dados): 
@@ -43,6 +47,7 @@ if event == 'Login':
     else: 
         sg.popup('Credenciais Invalidas.', title='Erro')
 
+#Cadastro
 elif event == 'Register':
 
     if not cadastrado(dados): 
@@ -54,4 +59,3 @@ elif event == 'Register':
 
     else:
         sg.popup(f'O usuário {dados[0]} já está cadastrado em nosso sistema.', title='Erro')
-

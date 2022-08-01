@@ -13,5 +13,5 @@ Conferir a presença de uma conta no bd, via 'Login'
 ![image](https://user-images.githubusercontent.com/90516048/182053858-8191da44-6a87-4d54-8e69-c66ceb76debc.png)
 
 TO DO:
- - Impedir registro de usuarios idênticos.
- - 
+ - Impedir registro de usuarios idênticos. ✔️
+

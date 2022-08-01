@@ -32,15 +32,15 @@ if event == 'Login':
     
     if cursor.fetchone():
 
-        sg.popup('Login realizado com sucesso')
+        sg.popup('Login realizado com sucesso.', title='Sucesso')
 
     else:
 
-        sg.popup('Credenciais Invalidas')
+        sg.popup('Credenciais Invalidas.', title='Erro')
 
 elif event == 'Register':
     
     sql = "INSERT INTO cadastro (username, password) VALUES (%s, %s)"
     cursor.execute(sql, dados)
     db.commit()
-    sg.popup('Registrado com sucesso')
+    sg.popup(f'{dados[0]}, sua conta foi registrada com sucesso.', title='Sucesso')

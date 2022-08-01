@@ -1,4 +1,3 @@
-from tkinter import INSERT
 import PySimpleGUI as sg
 import mysql.connector
 
@@ -24,6 +23,7 @@ layout = [
 window = sg.Window('Realize seu login', layout)
 event, values = window.read()
 dados = (values['username'], values['password'])
+window.close()
 
 if event == 'Login':
     
@@ -32,17 +32,15 @@ if event == 'Login':
     
     if cursor.fetchone():
 
-        print("Successfully")
+        sg.popup('Login realizado com sucesso')
 
     else:
 
-        print("Invalid Credentials")
+        sg.popup('Credenciais Invalidas')
 
 elif event == 'Register':
     
     sql = "INSERT INTO cadastro (username, password) VALUES (%s, %s)"
     cursor.execute(sql, dados)
     db.commit()
-
-window.close()
-
+    sg.popup('Registrado com sucesso')
